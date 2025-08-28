@@ -6,9 +6,9 @@
              @csrf
              @method('PUT')
              <div class="mb-3">
-                 <label for="name" class="form-label">Name</label>
-                 <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $category->title) }}">
-                 @error('name')
+                 <label for="title" class="form-label">Name</label>
+                 <input type="text" name="title" id="title" class="form-control" value="{{ old('name', $category->title) }}">
+                 @error('title')
                      <div class="invalid-feedback">{{ $message }}</div>
                  @enderror
              </div>

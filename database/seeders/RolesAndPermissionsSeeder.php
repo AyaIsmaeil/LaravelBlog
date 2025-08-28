@@ -21,19 +21,29 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'manage_users']);
 
         $adminRole = Role::create(['name' => 'admin']);
-        $adminRole->givePermissionTo(Permission::all());
-        $superAdminRole = Role::create(['name' => 'super-admin']);
-        $superAdminRole->givePermissionTo(Permission::all());
-
         
-         $adminUser = User::Create([
+        $adminRole->givePermissionTo(['manage_categories','manage_tags']);
+        
+        $superAdminRole = Role::create(['name' => 'super-admin']);
+        $superAdminRole->givePermissionTo('manage_users');
+
+        $adminUser = User::Create([
             'name' => 'Admin',
-            'email' => 'admin@blog.com',      
+            'email' => 'admin@gmail.com',      
             'password' => Hash::make('password'),
-            'role' => 'admin',
         ]
         ); 
         $adminUser->assignRole('admin');
+        $superAdminUser = User::Create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@gmail.com',
+            'password' => Hash::make('password123'),
+        ]
+        );
+        $superAdminUser->assignRole('super-admin');
+
+        
+
     
     }
 }

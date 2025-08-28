@@ -20,11 +20,11 @@
                 <td>{{ $user->email }}</td>
                 <td>
                     @foreach($user->roles as $role)
-                    <span class="badge bg-primary">{{ $role->name }}</span>
+                    <span class="badge bg-info">{{ $role->name }}</span>
                     @endforeach
                 </td>
                 <td>
-                    @if(!$user->hasRole('admin'))
+                    @if(!$user->hasRole('super-admin'))
                     <form action="{{ route('users.makeAdmin', $user) }}" method="POST" class="d-inline">
                         @csrf
                         @method('PUT')

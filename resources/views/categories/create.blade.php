@@ -7,9 +7,9 @@
         <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
-                <label for="name" class="form-label">Category Name</label>
-                <input type="text" class="form-control" id="name" name="name"  required>
-                @error('name')
+                <label for="title" class="form-label">Category Name</label>
+                <input type="text" class="form-control" id="title" name="title"  required>
+                @error('title')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>

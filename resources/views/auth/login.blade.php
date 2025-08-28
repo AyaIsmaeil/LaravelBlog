@@ -13,7 +13,7 @@
                 {{ $errors->first('message') }}
             </div>
         @endif
-        <form action="/login" method="POST">
+        <form action="{{ route('login') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>

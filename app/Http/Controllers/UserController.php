@@ -12,11 +12,11 @@ class UserController extends Controller
         return view('users.index',compact('users'));
     }
 
-    public function makeAdmin(User $user){
-    $user->assignRole('admin');  
-
-    return redirect()->route('users.index')
+    function makeAdmin(User $user){
+        $user->assignRole('admin');
+        return redirect()->route('users.index')
         ->with('success',$user->name.' is now an admin');
     }
+
     
 }

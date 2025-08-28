@@ -12,15 +12,17 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login.form');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('categories', CategoryController::class)->middleware('permission:manage_categories');
     Route::resource('tags', TagController::class)->middleware(['permission:manage_tags']);
-
     Route::resource('users', UserController::class)->middleware('permission:manage_users'); 
-    Route::put('/users/{user}/make-admin', [UserController::class, 'makeAdmin'])
-    ->name('users.makeAdmin')->middleware('permission:manage_users');
+
 }); 
+
+Route::middleware(['role:super-admin'])->group(function () {
+    Route::get('/users/make-admin', [UserController::class, 'index'])->name('users.index');
+    Route::put('/users/{user}/make-admin', [UserController::class, 'makeAdmin'])->name('users.makeAdmin');
+});
 

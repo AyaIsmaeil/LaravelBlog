@@ -9,7 +9,7 @@
                 <p class="card-text">
                     <strong>Image:</strong>
                     @if($category->image)
-                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->title }}" width="100">
+                        <img src="{{asset('images/' . $category->image)}}" alt="{{ $category->title }}" width="100">
                     @endif
                 </p>
                 <a href="{{ route('categories.index') }}" class="btn btn-secondary">Back</a>

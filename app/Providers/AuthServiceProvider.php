@@ -9,6 +9,7 @@ use App\Policies\TagPolicy;
 use App\Policies\PostPolicy;
 use App\Policies\CommentPolicy;
 use App\Policies\CategoryPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Container\Attributes\Tag;
 
@@ -29,6 +30,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
     }
 }

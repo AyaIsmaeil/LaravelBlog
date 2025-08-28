@@ -4,33 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CategoryController extends Controller
 {
     use AuthorizesRequests;
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function index(Category $categories)
     {
+        if (!Auth::user()->hasRole('admin') || !Auth::user()->hasPermissionTo('manage_categories')) {
+            abort(403, 'Unauthorized');
+        }
         $categories=Category::all();
         return view('categories.index',compact('categories'));
     }
 
-    public function create(Category $category)
+    public function create()
     {
-        return view('categories.create',compact('category'));
+        if (!Auth::user()->hasRole('admin') || !Auth::user()->hasPermissionTo('manage_categories')) {
+            abort(403, 'Unauthorized');
+        }
+        return view('categories.create');
     }
 
 
     public function store(Request $request)
     {
+        if (!Auth::user()->hasRole('admin') || !Auth::user()->hasPermissionTo('manage_categories')) {
+            abort(403, 'Unauthorized');
+        }
         $data=$request->validate([
             'title'=>'required|string|max:50',
             'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -45,19 +55,30 @@ class CategoryController extends Controller
         return redirect()->route('categories.index');
     }
 
-    public function show(Category $category)
+    public function show(String $id)
     {
+        if (!Auth::user()->hasRole('admin') || !Auth::user()->hasPermissionTo('manage_categories')) {
+            abort(403, 'Unauthorized');
+        }
+        $category=Category::find($id);
         return view('categories.show',compact('category'));
     }
 
 
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        return view('categories.edit');
+        if (!Auth::user()->hasRole('admin') || !Auth::user()->hasPermissionTo('manage_categories')) {
+            abort(403, 'Unauthorized');
+        }
+
+        return view('categories.edit',compact('category'));
     }
 
     public function update(Request $request, string $id)
     {
+        if (!Auth::user()->hasRole('admin') || !Auth::user()->hasPermissionTo('manage_categories')) {
+            abort(403, 'Unauthorized');
+        }
         $validated=$request->validate([
             'title'=>'required|string|max:50',
         ]);
@@ -81,7 +102,9 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        $this->authorize('delete', $category);
+        if (!Auth::user()->hasRole('admin') || !Auth::user()->hasPermissionTo('manage_categories')) {
+            abort(403, 'Unauthorized');
+        }
         if ($category->image) {
             Storage::delete($category->image);
         }

@@ -66,8 +66,7 @@ class PostController extends Controller
             'title' => 'required|string',
             'content' => 'required|string',
             'category_id' => 'required|exists:categories,id',
-            'tags' => 'array',
-            'tags.*' => 'exists:tags,id',
+            'tags' => 'array|exists:tags,id',
         ]);
         $post = auth()->user()->posts()->create([
             'title' => $validated['title'],

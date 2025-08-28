@@ -57,10 +57,5 @@ class User extends Authenticatable
     function comments(){
         return $this->HasMany(Comment::class);
     }
-    public function isAdmin(){ 
-        return $this->role === 'admin'; 
-    }
-    public function isSuperAdmin(){
-         return (bool) $this->is_super_admin; 
-    }
+
 }
